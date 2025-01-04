@@ -4,6 +4,8 @@ require('dotenv').config();
 
 const authRoutes = require('./routes/authRoutes');
 const memsRoutes = require('./routes/memsRoutes');
+const cluesRoutes = require('./routes/cluesRoutes');
+const settingsRoutes = require('./routes/settingsRoutes');
 
 require('./models/User');
 require('./models/Memory');
@@ -19,9 +21,14 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
+app.use('/uploads', express.static('uploads'));
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/memories', memsRoutes);
+app.use('/api/clues', cluesRoutes);
+app.use('/api/settings', settingsRoutes);
+
 
 // Test Route
 app.get('/', (req, res) => {

@@ -14,11 +14,11 @@ db.run(`
 
 // Seed Memories
 db.run(`
-  INSERT INTO Memories (user_id, title, content, location) 
+  INSERT INTO Memories (user_id, title, content, image_url, latitude, longitude) 
   VALUES 
-    (1, 'First Memory', 'This is the first test memory.', 'Location A'),
-    (2, 'Second Memory', 'This is the second test memory.', 'Location B'),
-    (3, 'Third Memory', 'This is the third test memory.', 'Location C')
+    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/no1.jpg', 37.7749, -122.4194),
+    (2, 'Beach Day', 'Relaxing day at the sunny beach.', '/uploads/no2.jpg', 34.0522, -118.2437),
+    (3, 'City Lights', 'Exploring the city at night.', '/uploads/no3.jpg', 40.7128, -74.0060)
 `, (err) => {
   if (err) console.error('Error seeding Memories:', err.message);
   else console.log('Memories table seeded successfully');
@@ -26,11 +26,11 @@ db.run(`
 
 // Seed Clues
 db.run(`
-  INSERT INTO Clues (description, location) 
+  INSERT INTO Clues (description, location, latitude, longitude, image_url) 
   VALUES 
-    ('Find the hidden treasure', 'Park Entrance'),
-    ('Look behind the old tree', 'Central Square'),
-    ('Search near the fountain', 'City Garden')
+    ('Find the hidden key', 'Central Park', 1.23, 34.34, '/uploads/no1.jpg'),
+    ('Look behind the old tree', 'City Square', 34.45, 45.45, '/uploads/no2.jpg'),
+    ('Search near the fountain', 'Town Plaza', 34.4, 42.4, '/uploads/no3.jpg')
 `, (err) => {
   if (err) console.error('Error seeding Clues:', err.message);
   else console.log('Clues table seeded successfully');
