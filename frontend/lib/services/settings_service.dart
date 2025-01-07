@@ -1,7 +1,7 @@
 import 'api_service.dart';
 import 'package:logger/logger.dart';
 
-final Logger logger = Logger(level: Level.info);
+final Logger logger = Logger(level: Level.error);
 
 class SettingsService {
   final ApiService _api = ApiService();
@@ -20,6 +20,20 @@ class SettingsService {
       logger.e('Unexpected error during settings update');
       logger.e(response?.data);
       return {'success': false, 'error': 'Unknown error'};
+    }
+  }
+
+  Future<Map<String, dynamic>> getSettings(int userId) async {
+    final response = await _api.get('/settings/get_settings?user_id=$userId');
+
+    if(response?.statusCode == 200) {
+      logger.d('Successfully got settings');
+      logger.i(response?.data);
+      return {'success': true, 'data': response?.data};
+    }
+    else {
+      logger.e('Unexpected error during settings retrieval');
+      return {'success': false};
     }
   }
 

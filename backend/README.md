@@ -93,7 +93,8 @@ backend/
 ### ⚙️ **3.4 Settings Endpoints**
 | **Method** | **Endpoint**          | **Description**          |
 |------------|------------------------|---------------------------|
-| `PUT`      | `/api/settings/update` | Update notifications setting |
+| `PUT`      | `/api/settings/update`        | Update notifications setting |
+| `GET`      | `/api/settings/get_settings`  | Get all settings for a user  |
 
 ---
 

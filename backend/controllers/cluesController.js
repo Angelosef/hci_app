@@ -17,7 +17,7 @@ exports.get_unlocked = (req, res) => {
         [user_id],
         (err, rows) => {
             if (err) {
-                return res.status(500).json({ error: 'Failed to fetch memories' });
+                return res.status(500).json({ error: 'Failed to fetch clues' });
             }
             res.status(200).json({ status: 'OK', clues: rows });
         }

@@ -1,7 +1,9 @@
+import 'package:dio/dio.dart';
+
 import 'api_service.dart';
 import 'package:logger/logger.dart';
 
-final Logger logger = Logger(level: Level.info);
+final Logger logger = Logger(level: Level.error);
 
 class MemoryService {
   final ApiService _api = ApiService();
@@ -30,35 +32,35 @@ class MemoryService {
     }
   }
 
-  /*
   Future<Map<String, dynamic>> addMemory({
-  required int userId,
-  required String title,
-  required String content,
-  required String imagePath,
-}) async {
-
-    // Create a FormData object to handle multipart data
+    required int userId,
+    required String title,
+    required String content,
+    required String imagePath
+  }) async {
     final formData = FormData.fromMap({
       'user_id': userId,
       'title': title,
       'content': content,
       'image': await MultipartFile.fromFile(
         imagePath,
-        filename: imagePath.split('/').last, // Extract filename from path
-        contentType: MediaType('image', 'jpeg'),
-      ),
+        filename: imagePath.split('/').last,
+        contentType: DioMediaType('image', 'jpeg'),
+      )
     });
+
     final response = await _api.post('/memories/add_memory', formData);
-    if (response?.statusCode == 200) {
-      logger.i('memory added successfuly');
+
+    if (response?.statusCode == 201) {
+      logger.d('Memory added successfully');
+      logger.i(response?.data);
       return {'success': true, 'data': response?.data};
     }
     else {
-      logger.e('Unknown error');
+      logger.e('Failed to add memory - reason: unknown');
       return {'success': false};
     }
+  }
 
-}
-   */
+  
 }
