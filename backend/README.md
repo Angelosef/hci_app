@@ -111,9 +111,7 @@ GET http://localhost:3000/api/memories/get_all?user_id=1
   "user_id": 1,
   "title": "A Day at the Beach",
   "content": "Enjoyed a sunny day!",
-  "image": <upload_file>,
-  "latitude": 37.7749,
-  "longitude": -122.4194
+  "image": <upload_file>
 }
 ```
 
