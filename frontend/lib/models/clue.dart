@@ -1,5 +1,6 @@
 class Clue {
   final int id;
+  final String title;
   final String description;
   final String imageUrl;
   final String location;
@@ -8,6 +9,7 @@ class Clue {
 
   Clue({
     required this.id,
+    required this.title,
     required this.description,
     required this.imageUrl,
     required this.location,
@@ -18,6 +20,7 @@ class Clue {
   factory Clue.fromJson(Map<String, dynamic> json) {
     return Clue(
       id: json['clue_id'],
+      title: json['title'],
       description: json['description'],
       location: json['location'],
       imageUrl: json['image_url'] ?? '',
@@ -29,6 +32,7 @@ class Clue {
   Map<String, dynamic> toJson() {
     return {
       'clue_id': id,
+      'title': title,
       'description': description,
       'location': location,
       'image_url': imageUrl,
