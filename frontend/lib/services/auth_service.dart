@@ -1,12 +1,21 @@
 import 'api_service.dart';
+import '/models/user.dart';
 import 'package:logger/logger.dart';
 
-final Logger logger = Logger(level: Level.error);
+final Logger logger = Logger(level: Level.debug);
+
+class AuthException implements Exception {
+  final String message;
+  AuthException(this.message);
+
+  @override
+  String toString() => 'AuthException: $message';
+}
 
 class AuthService {
   final ApiService _api = ApiService();
 
-  Future<Map<String, dynamic>> login(String username, String password) async {
+  Future<Map<String, dynamic>> loginRaw(String username, String password) async {
     final response = await _api.post('/auth/login', {
       'username': username,
       'password': password,
@@ -30,7 +39,7 @@ class AuthService {
 
   }
 
-  Future<Map<String, dynamic>> register(String username, String password) async {
+  Future<Map<String, dynamic>> registerRaw(String username, String password) async {
     final response = await _api.post('/auth/register', {
       'username': username,
       'password': password,
@@ -52,4 +61,51 @@ class AuthService {
     }
 
   }
+
+  Future<User> login(String username, String password) async {
+    final response = await loginRaw(username, password);
+
+    if (response['success'] == true) {
+      final data = response['data'];
+      final userId = data['user_id'];
+
+      // Create the User instance correctly
+      final User user = User(
+        id: userId,
+        username: username,
+        password: password,
+      );
+      final userJson = user.toJson();
+      logger.i(userJson);
+
+      return user; // Return the created user
+    } else {
+      logger.e(response);
+      throw AuthException(response['error']);
+    }
+  }
+
+  Future<User> register(String username, String password) async {
+    final response = await registerRaw(username, password);
+
+    if (response['success'] == true) {
+      final data = response['data'];
+      final userId = data['user_id'];
+
+      // Create the User instance correctly
+      final User user = User(
+        id: userId,
+        username: username,
+        password: password,
+      );
+      final userJson = user.toJson();
+      logger.i(userJson);
+
+      return user; // Return the created user
+    } else {
+      logger.e(response);
+      throw AuthException(response['error']);
+    }
+  }
+
 }
