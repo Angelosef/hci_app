@@ -1,4 +1,5 @@
-import 'package:frontend/services/test_services.dart';
+import 'package:frontend/ui/screens/test_screens.dart';
+
 void main() {
-  testService();
+  testLogin();
 }
