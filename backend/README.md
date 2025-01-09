@@ -96,6 +96,11 @@ backend/
 | `PUT`      | `/api/settings/update`        | Update notifications setting |
 | `GET`      | `/api/settings/get_settings`  | Get all settings for a user  |
 
+###  **3.5 Images Endpoints**
+| **Method** | **Endpoint**       | **Description**          |
+|------------|--------------------|--------------------------|
+| `GET`      | `/uploads/no1.jpg` | Get requested image      |
+
 ---
 
 ## 🧪 **4. Testing the API**
