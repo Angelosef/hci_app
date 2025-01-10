@@ -16,4 +16,9 @@ class UserProvider extends ChangeNotifier {
     _user = user;
     notifyListeners();
   }
+
+  void clear() {
+    set(User(id: 0, username: 'geust', password: 'no_password'));
+  }
+
 }
