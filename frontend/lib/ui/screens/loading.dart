@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:frontend/providers/app_state.dart';
+import 'package:frontend/providers/user_provider.dart';
+import 'package:frontend/providers/settings_provider.dart';
 import 'package:logger/logger.dart';
 
 class LoadingScreen extends StatefulWidget {
+  const LoadingScreen({super.key});
   @override
-  _LoadingScreenState createState() => _LoadingScreenState();
+  State<LoadingScreen> createState() => _LoadingScreenState();
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
@@ -20,18 +22,15 @@ class _LoadingScreenState extends State<LoadingScreen> {
   Future<void> _initializeData() async {
     try {
       // Fetch data using the user ID from UserProvider
-      AppState appState = Provider.of<AppState>(context, listen: false);
+      UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
+      SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context, listen: false);
       
-      await appState.initialize();
-      logger.d(appState.userState.get().toJson());
-      logger.d(appState.settingsState.get().toJson());
+      await settingsProvider.initialize(userProvider.get().id);
+      logger.d(userProvider.get().toJson());
+      logger.d(settingsProvider.get().toJson());
       //await Future.delayed(Duration(seconds: 2));
-      
-      // Navigate to HomePage
-      if(context.mounted) {
-        Navigator.pushReplacementNamed(context, '/home');
-      }
-      
+      Navigator.pushReplacementNamed(context, '/home');
+
     } catch (error) {
       // Handle errors (e.g., navigate to login screen or show error)
     }
@@ -39,8 +38,11 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Navigate to HomePage
+      
     return Scaffold(
       body: Center(child: CircularProgressIndicator()),
     );
+    
   }
 }

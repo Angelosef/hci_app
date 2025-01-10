@@ -4,7 +4,7 @@ import 'package:frontend/services/settings_service.dart';
 import 'package:logger/logger.dart';
 
 class SettingsProvider extends ChangeNotifier {
-  final Logger logger = Logger(level: Level.debug);
+  Logger logger = Logger(level: Level.debug);
   Settings _settings = Settings(
     userId: 0,
     notificationsEnabled: true, 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/providers/user_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:frontend/providers/app_state.dart';
 import 'package:frontend/services/auth_service.dart';
 import 'package:logger/logger.dart';
 
@@ -16,7 +15,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userProvider = context.select<AppState, UserProvider>((state)=>state.userState);
+    final userProvider = context.watch<UserProvider>();
 
     return Scaffold(
       appBar: AppBar(

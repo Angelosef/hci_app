@@ -4,7 +4,8 @@ import 'package:frontend/ui/screens/login.dart';
 import 'package:frontend/ui/screens/register.dart';
 import 'package:frontend/ui/screens/settings.dart';
 import 'package:provider/provider.dart';
-import 'package:frontend/providers/app_state.dart';
+import 'package:frontend/providers/user_provider.dart';
+import 'package:frontend/providers/settings_provider.dart';
 import 'package:logger/logger.dart';
 
 
@@ -65,7 +66,8 @@ void testLogin() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => AppState()),
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => SettingsProvider()),
       ],
       child: MyApp(),
     ),
