@@ -5,9 +5,9 @@ import 'package:frontend/providers/app_state.dart';
 import 'package:frontend/services/auth_service.dart';
 import 'package:logger/logger.dart';
 
-// Login Screen
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+// Register Screen
+class RegisterScreen extends StatelessWidget {
+  RegisterScreen({super.key});
 
   final Logger logger = Logger(level: Level.debug);
   final _formKey = GlobalKey<FormState>();
@@ -20,7 +20,7 @@ class LoginScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Login"),
+        title: Text("Register"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -66,11 +66,11 @@ class LoginScreen extends StatelessWidget {
                     // Call login service
                     try {
                       final AuthService authService = AuthService();
-                      final user = await authService.login(
-                          username, password); // Your login service function
+                      final user = await authService.register(
+                          username, password);
                       logger.d(user.toJson());
                       userProvider.set(user); // Save user state
-                      if(context.mounted) {
+                      if (context.mounted) {
                         Navigator.pushReplacementNamed(context, '/loading'); // Navigate to Home
                       }
                     } catch (error) {
@@ -78,22 +78,22 @@ class LoginScreen extends StatelessWidget {
                         // Check if the widget is still mounted
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                              content: Text("Login failed: ${error.toString()}")),
+                              content: Text("Sign up failed: ${error.toString()}")),
                         );
                       }
                     }
                   }
                 },
-                child: Text("Log In"),
+                child: Text("Sign Up"),
               ),
               SizedBox(height: 50),
-              Text("Don't have an account? Sign up!"),
+              Text("Changed your mind? Log in!"),
               ElevatedButton(
                 onPressed: () {
-                  logger.d('sign up button pressed');
-                  Navigator.pushReplacementNamed(context, '/register');
+                  logger.d('log in button pressed');
+                  Navigator.pushReplacementNamed(context, '/');
                 },
-                child: Text("Sign Up")
+                child: Text("Log In")
                 ),
             ],
           ),
