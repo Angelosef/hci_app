@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 
-final Logger logger = Logger(level: Level.debug);
+final Logger logger = Logger(level: Level.error);
 
 class ApiService {
-  final Dio _dio = Dio(BaseOptions(baseUrl: 'http://localhost:3000/api'));
+  final Dio _dio = Dio(BaseOptions(baseUrl: 'http://10.0.2.2:3000/api'));
 
   Future<Response?> get(String endpoint) async {
     try {

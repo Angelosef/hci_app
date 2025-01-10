@@ -10,14 +10,14 @@ class Settings {
   factory Settings.fromJson(Map<String, dynamic> json) {
     return Settings(
       userId: json['user_id'],
-      notificationsEnabled: json['notifications_enabled'] ?? true,
+      notificationsEnabled: (json['notifications_enabled'] == 1) ? true : false,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'user_id': userId,
-      'notifications_enabled': notificationsEnabled,
+      'notifications_enabled': notificationsEnabled ? 1 : 0,
     };
   }
 }
