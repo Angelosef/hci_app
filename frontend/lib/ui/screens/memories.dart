@@ -1,14 +1,12 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:frontend/providers/memory_provider.dart';
-import 'package:logger/logger.dart';
+import 'package:frontend/constants/urls.dart';
+import 'package:frontend/ui/widgets/memory_widget.dart';
+import 'package:frontend/ui/screens/memory_details.dart';
 
 class MemoryList extends StatelessWidget {
-  MemoryList({super.key});
-  final Logger logger = Logger(level: Level.debug);
-  
-
+  const MemoryList({super.key});
   
   @override
   Widget build(BuildContext context) {
@@ -17,13 +15,20 @@ class MemoryList extends StatelessWidget {
     return ListView.builder(
       itemCount: memoryProvider.get().length,
       itemBuilder: (context, index) {
-        return ListTile(
-          leading: CachedNetworkImage(
-            imageUrl: 'http://10.0.2.2:3000${memoryProvider.get()[index].imageUrl}',
-            placeholder: (context, url) => CircularProgressIndicator(),
-            errorWidget: (context, url, error) => Icon(Icons.error),
-          ),
-          title: Text('Memory ${index + 1}'),
+        final memory = memoryProvider.get()[index];
+
+        return MemoryTile(
+          imageUrl: imageBaseUrl + memory.imageUrl,
+          title: memoryProvider.get()[index].title,
+          onTap: () {
+            // Navigate to the detailed memory screen
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MemoryDetailsScreen(memory: memory),
+              ),
+            );
+          },
         );
       },
     );
