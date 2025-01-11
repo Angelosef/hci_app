@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/ui/screens/loading.dart';
 import 'package:frontend/ui/screens/login.dart';
+import 'package:frontend/ui/screens/add_mem.dart';
 import 'package:frontend/ui/screens/register.dart';
 import 'package:frontend/ui/screens/settings.dart';
 import 'package:provider/provider.dart';
@@ -51,7 +52,7 @@ class MyApp extends StatelessWidget {
       // Define named routes
       initialRoute: '/',
       routes: {
-        '/': (context) => LoginScreen(),
+        '/': (context) => AddMemoryScreen(),
         '/loading': (context) => LoadingScreen(),
         '/home': (context) => HomePage(),
         '/register': (context) => RegisterScreen(),

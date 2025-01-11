@@ -117,18 +117,12 @@ class LoginScreen extends StatelessWidget {
                 onPressed: () {
                   // Add your sign up action here, such as navigating to the sign up screen
                   // Navigator.pushNamed(context, '/sign_up'); // Example navigation
-                },
-                child: const Text("Sign Up"),
-              ),
-              SizedBox(height: 50),
-              Text("Don't have an account? Sign up!"),
-              ElevatedButton(
-                onPressed: () {
                   logger.d('sign up button pressed');
                   Navigator.pushReplacementNamed(context, '/register');
                 },
-                child: Text("Sign Up")
-                ),
+                child: const Text("Sign Up"),
+              ),
+            
             ],
           ),
         ),

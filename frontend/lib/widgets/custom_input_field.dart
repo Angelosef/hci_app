@@ -21,7 +21,7 @@ class CustomInputField extends StatelessWidget {
         hintStyle: const TextStyle(color: Colors.grey), // Placeholder style
         filled: true,
         fillColor: const Color(0xFFE5E2E1), // Background color
-        contentPadding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 10.0), // Padding inside the field
+        contentPadding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0), // Padding inside the field
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12.0), // Rounded corners
           borderSide: BorderSide.none, // No border
