@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/providers/user_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:frontend/providers/app_state.dart';
 import 'package:frontend/services/auth_service.dart';
 import 'package:frontend/widgets/custom_input_field.dart'; // Import your CustomInputField
 import 'package:logger/logger.dart';
@@ -16,7 +15,11 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     final userProvider = context.select<AppState, UserProvider>((state) => state.userState);
+=======
+    final userProvider = context.watch<UserProvider>();
+>>>>>>> origin/main
 
     return Scaffold(
       appBar: AppBar(

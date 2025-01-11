@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/models/settings.dart';
 import 'package:provider/provider.dart';
-import 'package:frontend/providers/app_state.dart';
-import 'package:frontend/providers/user_provider.dart';
 import 'package:frontend/providers/settings_provider.dart';
+import 'package:frontend/providers/user_provider.dart';
 import 'package:logger/logger.dart';
 
 
@@ -14,12 +13,9 @@ class SettingsScreen extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    logger.d('buildin settings');
-    final userProvider = context.select<AppState, UserProvider>((state)=>state.userState);
-    final settingsProvider = context.select((AppState state)=>state.settingsState);
-    final notificationsEnabled = context.select<AppState, bool>(
-      (state) => state.settingsState.get().notificationsEnabled,
-    );
+    final userProvider = context.watch<UserProvider>();
+    final settingsProvider = context.watch<SettingsProvider>();
+
     final String username = userProvider.get().username;
     
     return Scaffold(
@@ -108,7 +104,7 @@ class SettingsScreen extends StatelessWidget {
                 style: TextStyle(color: Colors.white, fontSize: 16),
               ),
               trailing: Switch(
-                value: notificationsEnabled,
+                value: settingsProvider.get().notificationsEnabled,
                 onChanged: (bool value) {
                   logger.d('pressed switch');
                   
