@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart'; // You'll need to add the image_picker package
 import 'dart:io';  // Add this import to use the File class
-import 'package:frontend/widgets/navigation_bar.dart';
+import 'package:frontend/services/memory_service.dart'; // Import the memory service
+import 'package:frontend/widgets/navigation_bar.dart'; // Assuming you have a navigation bar widget
 
 class AddMemoryScreen extends StatefulWidget {
   const AddMemoryScreen({super.key});
@@ -26,65 +27,77 @@ class _AddMemoryScreenState extends State<AddMemoryScreen> {
     }
   }
 
+  Future<void> _saveMemory() async {
+    String title = _titleController.text.trim();
+    String description = _descriptionController.text.trim();
+
+    if (title.isEmpty || description.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Please fill in both title and description.'),
+      ));
+      return;
+    }
+
+    int userId = 1; // Example user ID, use the actual user ID here
+    String imagePath = _image?.path ?? ''; // If no image, pass an empty string
+
+    final memoryService = MemoryService();
+    final result = await memoryService.addMemory(
+      userId: userId,
+      title: title,
+      content: description,
+      imagePath: imagePath,
+    );
+
+    if (result['success']) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Memory added successfully!'),
+      ));
+      Navigator.pop(context); // Go back to the previous screen
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Failed to add memory. Please try again!'),
+      ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Get the screen height
     double screenHeight = MediaQuery.of(context).size.height;
-    double topBarHeight = kToolbarHeight; // Height of the app bar (default is 56.0)
-    double bottomBarHeight = kBottomNavigationBarHeight; // Bottom bar height
-
-    // Image size (25% larger than before)
-    double imageSize = 125; // Image square size (was 100, now 125)
-
-    // Calculate available height for description input area
-    double descriptionAreaHeight = screenHeight - topBarHeight - imageSize - bottomBarHeight - 60; // 20px margin above the bottom bar
+    double topBarHeight = kToolbarHeight;
+    double bottomBarHeight = kBottomNavigationBarHeight;
+    double imageSize = 125;
+    double descriptionAreaHeight = screenHeight - topBarHeight - imageSize - bottomBarHeight - 60;
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF00293D), // Top bar color
-        elevation: 0, // Remove shadow
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications, color: Colors.white),
-            onPressed: () {
-              // Handle notifications action
-            },
-          ),
-        ],
-        leading: IconButton(
-          icon: const Icon(Icons.settings, color: Colors.white),
-          onPressed: () {
-            // Handle settings action
-          },
-        ),
+        backgroundColor: const Color(0xFF00293D),
+        elevation: 0,
       ),
       body: Stack(
         children: [
-          // Add a placeholder for the picture selection (25% larger)
+          // Add a placeholder for the picture selection
           Positioned(
             top: 15,
             left: 15,
             child: GestureDetector(
               onTap: _pickImage, // Open the image picker when tapped
               child: Container(
-                width: imageSize, // 25% larger (was 100)
-                height: imageSize, // 25% larger (was 100)
+                width: imageSize,
+                height: imageSize,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF00344C), // Square background color
-                  borderRadius: BorderRadius.circular(12), // Rounded corners
-                  border: Border.all(color: Colors.white, width: 2), // Border to indicate the picture area
+                  color: const Color(0xFF00344C),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.white, width: 2),
                 ),
                 child: _image == null
-                    ? const Icon(Icons.add_a_photo, color: Colors.white) // Icon if no image selected
-                    : Image.file(
-                        File(_image!.path),
-                        fit: BoxFit.cover,
-                      ),
+                    ? const Icon(Icons.add_a_photo, color: Colors.white)
+                    : Image.file(File(_image!.path), fit: BoxFit.cover),
               ),
             ),
           ),
 
-          // Add the image picker bottom sheet here when the user presses the square
+          // Add the image picker bottom sheet if no image is selected
           if (_image == null)
             Positioned(
               bottom: 0,
@@ -107,10 +120,10 @@ class _AddMemoryScreenState extends State<AddMemoryScreen> {
               ),
             ),
 
-          // Title Input Field next to the photo (with dynamic height)
+          // Title Input Field next to the photo
           Positioned(
             top: 15,
-            left: imageSize + 20, // Positioning it next to the image
+            left: imageSize + 20,
             right: 15,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -119,27 +132,27 @@ class _AddMemoryScreenState extends State<AddMemoryScreen> {
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: const Color(0xFF00344C), width: 2),
               ),
-              height: 125, // Set dynamic height
-              child: SingleChildScrollView( // Allow scrolling if text overflows
-                scrollDirection: Axis.vertical, // Scroll vertically when necessary
+              height: 125,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
                 child: TextField(
                   controller: _titleController,
-                  style: const TextStyle(color: Colors.white, fontSize: 22), // Larger font size for title
-                  maxLines: null, // Allow the title to wrap to the next line
+                  style: const TextStyle(color: Colors.white, fontSize: 22),
+                  maxLines: null,
                   decoration: const InputDecoration(
                     hintText: "Title",
                     hintStyle: TextStyle(color: Colors.white54),
                     border: InputBorder.none,
                   ),
-                  keyboardType: TextInputType.text, // Open the keyboard for text input
+                  keyboardType: TextInputType.text,
                 ),
               ),
             ),
           ),
 
-          // Description Input Field below the title (with dynamic height)
+          // Description Input Field below the title
           Positioned(
-            top: imageSize + 20, // Just below the image (with a 20px margin)
+            top: imageSize + 20,
             left: 15,
             right: 15,
             child: Container(
@@ -149,27 +162,45 @@ class _AddMemoryScreenState extends State<AddMemoryScreen> {
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(color: const Color(0xFF00344C), width: 2),
               ),
-              height: descriptionAreaHeight, // Set dynamic height
-              child: SingleChildScrollView( // Allow scrolling if text overflows
-                scrollDirection: Axis.vertical, // Scroll vertically when necessary
+              height: descriptionAreaHeight,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
                 child: TextField(
                   controller: _descriptionController,
                   style: const TextStyle(color: Colors.white),
-                  maxLines: null, // Make the TextField expand vertically
+                  maxLines: null,
                   decoration: const InputDecoration(
                     hintText: "Add a description",
                     hintStyle: TextStyle(color: Colors.white54),
                     border: InputBorder.none,
                   ),
-                  keyboardType: TextInputType.text, // Open the keyboard for text input
+                  keyboardType: TextInputType.text,
                 ),
+              ),
+            ),
+          ),
+
+          // Save Memory Button at the bottom
+          Positioned(
+            bottom: 15,
+            left: 15,
+            right: 15,
+            child: ElevatedButton(
+              onPressed: _saveMemory,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF006878),
+                padding: const EdgeInsets.symmetric(vertical: 15),
+              ),
+              child: const Text(
+                'Save Memory',
+                style: TextStyle(color: Colors.white, fontSize: 18),
               ),
             ),
           ),
         ],
       ),
-      bottomNavigationBar: const NavBar(), // Replace BottomAppBar with your custom NavigationBar widget
-      backgroundColor: const Color(0xFF00344C), // Screen background color
+      bottomNavigationBar: const NavBar(), // Custom navigation bar
+      backgroundColor: const Color(0xFF00344C),
     );
   }
 }

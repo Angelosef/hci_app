@@ -4,7 +4,7 @@ import 'package:frontend/models/user.dart';
 class UserProvider extends ChangeNotifier {
   User _user = User(
     id: 0,
-    username: 'geust',
+    username: 'guest',
     password: 'no_password',
   );
 
@@ -18,7 +18,7 @@ class UserProvider extends ChangeNotifier {
   }
 
   void clear() {
-    set(User(id: 0, username: 'geust', password: 'no_password'));
+    set(User(id: 0, username: 'guest', password: 'no_password'));
   }
 
 }

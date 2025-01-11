@@ -71,6 +71,4 @@ class MemoryService {
       return {'success': false};
     }
   }
-
-  
 }
