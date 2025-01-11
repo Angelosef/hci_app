@@ -106,8 +106,6 @@ class SettingsScreen extends StatelessWidget {
               trailing: Switch(
                 value: settingsProvider.get().notificationsEnabled,
                 onChanged: (bool value) {
-                  logger.d('pressed switch');
-                  
                   settingsProvider.set(Settings(
                     userId: userProvider.get().id,
                     notificationsEnabled: value));

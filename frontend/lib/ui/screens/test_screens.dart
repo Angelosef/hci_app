@@ -4,40 +4,14 @@ import 'package:frontend/ui/screens/login.dart';
 import 'package:frontend/ui/screens/add_mem.dart';
 import 'package:frontend/ui/screens/register.dart';
 import 'package:frontend/ui/screens/settings.dart';
+import 'package:frontend/ui/screens/home.dart';
+
 import 'package:provider/provider.dart';
 import 'package:frontend/providers/user_provider.dart';
+import 'package:frontend/providers/memory_provider.dart';
 import 'package:frontend/providers/settings_provider.dart';
-import 'package:logger/logger.dart';
 
 
-class HomePage extends StatelessWidget {
-  HomePage({super.key});
-
-  final Logger logger = Logger(level: Level.debug);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Home Page"),
-      ),
-      body: Column(
-        children: [
-          Center(
-            child: Text("You are logged in!"),
-          ),
-          ElevatedButton(onPressed: () {
-            logger.d('clicked to go to settings');
-            Navigator.pushNamed(context, '/home/settings');
-          }
-          , child: 
-          Text('Settings')
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -53,7 +27,7 @@ class MyApp extends StatelessWidget {
       // Define named routes
       initialRoute: '/',
       routes: {
-        '/': (context) => AddMemoryScreen(),
+        '/': (context) => HomePage(),
         '/loading': (context) => LoadingScreen(),
         '/home': (context) => HomePage(),
         '/register': (context) => RegisterScreen(),
@@ -68,6 +42,7 @@ void testLogin() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => MemoryProvider()),
         ChangeNotifierProvider(create: (_) => SettingsProvider()),
       ],
       child: MyApp(),
