@@ -16,7 +16,8 @@ class SettingsProvider extends ChangeNotifier {
 
   void set(Settings settings) {
     _settings = settings;
-    logger.d(_settings.toJson());
+    SettingsService settingsService = SettingsService();
+    settingsService.update(_settings.userId, _settings.notificationsEnabled);
     notifyListeners();
   }
 
