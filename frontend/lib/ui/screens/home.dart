@@ -4,6 +4,7 @@ import 'package:frontend/widgets/top_bar.dart'; // Import the TopBar widget
 import 'package:frontend/ui/screens/memories.dart'; // Assuming you have this screen
 import 'package:frontend/ui/screens/add_mem.dart'; // Add this import for Add Memory screen
 import 'package:frontend/ui/screens/map.dart';
+import 'package:frontend/ui/screens/clue_display.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,7 +20,7 @@ class _HomePageState extends State<HomePage> {
     Center(child: MapScreen()),
     Center(child: MemoryList()),       // Memories Screen
     Center(child: AddMemoryScreen()),
-    Center(child: Text("Flags!")),    // Profile Screen
+    Center(child: UnlockedCluesScreen()),
     Center(child: Text("Camera!")),
     // Add more screens as needed
   ];

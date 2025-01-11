@@ -3,6 +3,7 @@ import 'package:frontend/providers/memory_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:frontend/providers/user_provider.dart';
 import 'package:frontend/providers/settings_provider.dart';
+import 'package:frontend/providers/clue_provider.dart';
 import 'package:logger/logger.dart';
 
 class LoadingScreen extends StatefulWidget {
@@ -25,16 +26,22 @@ class _LoadingScreenState extends State<LoadingScreen> {
       // Fetch data using the user ID from UserProvider
       UserProvider userProvider = Provider.of<UserProvider>(context, listen: false);
       MemoryProvider memoryProvider = Provider.of<MemoryProvider>(context, listen: false);
+      ClueProvider clueProvider = Provider.of<ClueProvider>(context, listen: false);
       SettingsProvider settingsProvider = Provider.of<SettingsProvider>(context, listen: false);
       
       await settingsProvider.initialize(userProvider.get().id);
       await memoryProvider.initialize(userProvider.get().id);
+      await clueProvider.initialize(userProvider.get().id);
 
       logger.d(userProvider.get().toJson());
       logger.d(settingsProvider.get().toJson());
       final memories = memoryProvider.get();
       for (var i=0;i<memories.length;i++) {
         logger.d(memories[i].toJson());
+      }
+      final unlockedClues = clueProvider.getUnlockedClues();
+      for (var i=0;i<unlockedClues.length;i++) {
+        logger.d(unlockedClues[i].toJson());
       }
 
       //await Future.delayed(Duration(seconds: 2));
