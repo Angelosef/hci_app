@@ -2,14 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:frontend/ui/screens/loading.dart';
 import 'package:frontend/ui/screens/login.dart';
 import 'package:frontend/ui/screens/add_mem.dart';
+import 'package:frontend/ui/screens/memories.dart';
 import 'package:frontend/ui/screens/register.dart';
 import 'package:frontend/ui/screens/settings.dart';
 import 'package:frontend/ui/screens/home.dart';
+import 'package:frontend/ui/screens/clue_display.dart';
+
 
 import 'package:provider/provider.dart';
 import 'package:frontend/providers/user_provider.dart';
 import 'package:frontend/providers/memory_provider.dart';
 import 'package:frontend/providers/settings_provider.dart';
+import 'package:frontend/providers/clue_provider.dart';
+
 
 
 
@@ -27,11 +32,13 @@ class MyApp extends StatelessWidget {
       // Define named routes
       initialRoute: '/',
       routes: {
-        '/': (context) => HomePage(),
+        '/': (context) => LoginScreen(),
         '/loading': (context) => LoadingScreen(),
         '/home': (context) => HomePage(),
         '/register': (context) => RegisterScreen(),
         '/home/settings': (context) => SettingsScreen(),
+        '/home/clue_display': (context) => UnlockedCluesScreen(),
+        '/home/add_mem': (context) => AddMemoryScreen(),
       },
     );
   }
@@ -44,6 +51,7 @@ void testLogin() {
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => MemoryProvider()),
         ChangeNotifierProvider(create: (_) => SettingsProvider()),
+        ChangeNotifierProvider(create: (_) => ClueProvider()),
       ],
       child: MyApp(),
     ),

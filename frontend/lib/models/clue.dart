@@ -4,8 +4,8 @@ class Clue {
   final String description;
   final String imageUrl;
   final String location;
-  final double latitude;
-  final double longitude;
+  final double? latitude;
+  final double? longitude;
 
   Clue({
     required this.id,
@@ -13,19 +13,19 @@ class Clue {
     required this.description,
     required this.imageUrl,
     required this.location,
-    required this.latitude,
-    required this.longitude,
+    this.latitude,
+    this.longitude,
   });
 
   factory Clue.fromJson(Map<String, dynamic> json) {
     return Clue(
       id: json['clue_id'],
-      title: json['title'],
-      description: json['description'],
-      location: json['location'],
+      title: json['title'] ?? '',
+      description: json['description'] ?? '',
+      location: json['location'] ?? '',
       imageUrl: json['image_url'] ?? '',
-      latitude: (json['latitude'] as num).toDouble(),
-      longitude: (json['longitude'] as num).toDouble(),
+      latitude: json['latitude'] != null ? (json['latitude'] as num).toDouble() : null,
+      longitude: json['longitude'] != null ? (json['longitude'] as num).toDouble() : null,
     );
   }
 
@@ -36,8 +36,8 @@ class Clue {
       'description': description,
       'location': location,
       'image_url': imageUrl,
-      'latitude': latitude,
-      'longitude': longitude,
+      if (latitude != null) 'latitude': latitude,
+      if (longitude != null) 'longitude': longitude,
     };
   }
 }

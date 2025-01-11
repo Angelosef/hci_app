@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
 
 class NavBar extends StatelessWidget {
-  final void Function()? onMapPressed;
-  final void Function()? onListPressed;
-  final void Function()? onAddPressed;
-  final void Function()? onFlagPressed;
-  final void Function()? onCameraPressed;
+  final int currentIndex;
+  final void Function(int)? onTabSelected;
 
   const NavBar({
     Key? key,
-    this.onMapPressed,
-    this.onListPressed,
-    this.onAddPressed,
-    this.onFlagPressed,
-    this.onCameraPressed,
+    required this.currentIndex,
+    required this.onTabSelected,
   }) : super(key: key);
 
   @override
@@ -26,24 +20,39 @@ class NavBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             IconButton(
-              icon: const Icon(Icons.map, color: Color(0xFF006878)), // Non-selected icon
-              onPressed: onMapPressed, // Callback for map action
+              icon: Icon(
+                Icons.map,
+                color: currentIndex == 0 ? Colors.white : const Color(0xFF006878),
+              ),
+              onPressed: () => onTabSelected?.call(0),
             ),
             IconButton(
-              icon: const Icon(Icons.list, color: Color(0xFF006878)), // Non-selected icon
-              onPressed: onListPressed, // Callback for list action
+              icon: Icon(
+                Icons.list,
+                color: currentIndex == 1 ? Colors.white : const Color(0xFF006878),
+              ),
+              onPressed: () => onTabSelected?.call(1),
             ),
             IconButton(
-              icon: const Icon(Icons.add, color: Colors.white), // Selected icon
-              onPressed: onAddPressed, // Callback for add action
+              icon: Icon(
+                Icons.add,
+                color: currentIndex == 2 ? Colors.white : const Color(0xFF006878),
+              ),
+              onPressed: () => onTabSelected?.call(2),
             ),
             IconButton(
-              icon: const Icon(Icons.flag, color: Color(0xFF006878)), // Non-selected icon
-              onPressed: onFlagPressed, // Callback for flag action
+              icon: Icon(
+                Icons.flag,
+                color: currentIndex == 3 ? Colors.white : const Color(0xFF006878),
+              ),
+              onPressed: () => onTabSelected?.call(3),
             ),
             IconButton(
-              icon: const Icon(Icons.camera_alt, color: Color(0xFF006878)), // Non-selected icon
-              onPressed: onCameraPressed, // Callback for camera action
+              icon: Icon(
+                Icons.camera_alt,
+                color: currentIndex == 4 ? Colors.white : const Color(0xFF006878),
+              ),
+              onPressed: () => onTabSelected?.call(4),
             ),
           ],
         ),
