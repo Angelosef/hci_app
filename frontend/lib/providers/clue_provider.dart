@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/models/clue.dart';
 import 'package:frontend/services/clue_service.dart';
 import 'package:logger/logger.dart';
+import 'package:geolocator/geolocator.dart';
 
 class ClueProvider extends ChangeNotifier {
   Logger logger = Logger(level: Level.debug);
@@ -45,10 +46,38 @@ class ClueProvider extends ChangeNotifier {
     ClueService clueService = ClueService();
     var result = await clueService.addUnlocked(userId, clueId);
     if (result['success']) {
-      // Optionally, you could update the local unlocked clues here.
-      // E.g., by adding the new clue to the unlockedClues list.
+      await initialize(userId);
     } else {
       logger.e('Error unlocking clue');
     }
   }
+
+  Future<void> checkForUnlocks(int userId, Position position) async {
+    for (var clue in _lockedClues) {
+      var cluePosition = Position(
+      longitude: clue.longitude!,
+       latitude: clue.latitude!,
+        timestamp: position.timestamp,
+         accuracy: position.accuracy,
+          altitude: position.altitude,
+           altitudeAccuracy: position.altitudeAccuracy,
+            heading: position.heading,
+             headingAccuracy: position.headingAccuracy,
+              speed: position.speed,
+               speedAccuracy: position.speedAccuracy);
+      if(_closeToClue(cluePosition, position)) {
+        await addUnlockedClue(userId, clue.id);
+      }
+    }
+  }
+
+  bool _closeToClue(Position cluePosition, Position userPosition) {
+    const double thresholdDistance = 10;
+    double distance = Geolocator.distanceBetween(
+      cluePosition.latitude, cluePosition.longitude,
+      userPosition.latitude, userPosition.longitude);
+
+      return distance < thresholdDistance;
+  }
+
 }
