@@ -13,15 +13,18 @@ exports.add_memory = (req, res) => {
 
     // Extract EXIF data from the uploaded image
     const imagePath = req.file.path;
-    let latitude = null;
-    let longitude = null;
+    let latitude = 0;
+    let longitude = 0;
+    //console.log("accessing coordinates1");
 
     try {
         const buffer = fs.readFileSync(imagePath);
         const parser = exifParser.create(buffer);
         const result = parser.parse();
+        //console.log("accessing coordinates2");
 
         if (result.tags.GPSLatitude && result.tags.GPSLongitude) {
+            //console.log("accessing coordinates");
             latitude = result.tags.GPSLatitude;
             longitude = result.tags.GPSLongitude;
 

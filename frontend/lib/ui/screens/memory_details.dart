@@ -3,6 +3,9 @@ import 'package:frontend/models/memory.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:frontend/constants/urls.dart';
 import 'package:frontend/widgets/top_bar.dart'; // Import your custom TopBar widget
+import 'package:frontend/providers/memory_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:logger/logger.dart';
 
 class MemoryDetailsScreen extends StatelessWidget {
   final Memory memory; // Replace `Memory` with your memory model class
@@ -11,6 +14,16 @@ class MemoryDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
+    final Logger logger = Logger(level: Level.debug);
+    final memoryProvider = context.watch<MemoryProvider>();
+    void deleteMemory() {
+      
+      memoryProvider.delete(memory.id);
+      Navigator.pop(context);
+      logger.d('deleting picture');
+    }
+
     return Scaffold(
       appBar: const TopBar(), // Use your custom TopBar widget
       body: Padding(
@@ -87,6 +100,9 @@ class MemoryDetailsScreen extends StatelessWidget {
                   memory.content, // Description content
                   style: const TextStyle(fontSize: 16, color: Colors.white),
                 ),
+                ElevatedButton(
+                  onPressed: deleteMemory,
+                 child: Text('delete')),
               ],
             ),
           ),
