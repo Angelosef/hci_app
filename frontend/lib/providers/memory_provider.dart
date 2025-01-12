@@ -25,4 +25,12 @@ class MemoryProvider extends ChangeNotifier {
     List<Memory> memories = await memoryService.getMemories(userId);
     set(memories);
   }
+
+  void delete(int memoryId)  {
+    MemoryService memoryService = MemoryService();
+    memoryService.deleteMemory(memoryId);
+    _memories.removeWhere((memory) => memory.id == memoryId);
+    notifyListeners();
+  }
+
 }

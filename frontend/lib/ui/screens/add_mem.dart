@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/providers/memory_provider.dart';
 import 'package:image_picker/image_picker.dart'; // For selecting images
 import 'dart:io'; // For the File class
 import 'package:frontend/services/memory_service.dart'; // Import the memory service
 import 'package:frontend/providers/user_provider.dart'; // Import the UserProvider
 import 'package:provider/provider.dart'; // Import provider package
+import 'package:logger/logger.dart';
 
 class AddMemoryScreen extends StatefulWidget {
   const AddMemoryScreen({super.key});
@@ -16,12 +18,27 @@ class _AddMemoryScreenState extends State<AddMemoryScreen> {
   XFile? _image; // Holds the selected image
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+  final Logger logger = Logger(level: Level.debug);
+  
 
   Future<void> _pickImage() async {
     final ImagePicker picker = ImagePicker();
     final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
+    //final bytes = await pickedFile.readAsBytes();
+    //final tags = await readExifFromBytes(bytes);
+
+    //if (tags != null && tags.isNotEmpty) {
+      //final latitude = tags['GPSLatitude']?.printable;
+      //final longitude = tags['GPSLongitude']?.printable;
+
+      //if (latitude != null && longitude != null) {
+        //logger.d('latitude = $latitude');
+        //logger.d('longitude = $longitude');
+      //}
+    //}
+
       setState(() {
         _image = pickedFile;
       });
@@ -41,6 +58,7 @@ class _AddMemoryScreenState extends State<AddMemoryScreen> {
 
     // Get the current user from UserProvider
     final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final memoryProvider = Provider.of<MemoryProvider>(context, listen: false);
     int userId = userProvider.get().id; // Get user ID from the provider
     String imagePath = _image?.path ?? ''; // Get image path
 
@@ -53,10 +71,11 @@ class _AddMemoryScreenState extends State<AddMemoryScreen> {
     );
 
     if (result['success']) {
+      memoryProvider.initialize(userId);
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Memory added successfully!'),
       ));
-      Navigator.pop(context); // Navigate back to the previous screen
+      //Navigator.pop(context); // Navigate back to the previous screen
     } else {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text('Failed to add memory. Please try again!'),

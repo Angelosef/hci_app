@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:frontend/providers/memory_provider.dart';
 import 'package:frontend/constants/urls.dart';
-import 'package:frontend/ui/widgets/memory_widget.dart';
 import 'package:frontend/ui/screens/memory_details.dart';
 
 class MemoryList extends StatelessWidget {
