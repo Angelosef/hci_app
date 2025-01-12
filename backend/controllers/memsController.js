@@ -11,20 +11,19 @@ exports.add_memory = (req, res) => {
         return res.status(400).json({ error: 'user_id, title, content, and image are required' });
     }
 
-    // Extract EXIF data from the uploaded image
-    const imagePath = req.file.path;
+    // Default values for latitude and longitude
     let latitude = 0;
     let longitude = 0;
-    //console.log("accessing coordinates1");
+
+    // Extract EXIF data from the uploaded image
+    const imagePath = req.file.path;
 
     try {
         const buffer = fs.readFileSync(imagePath);
         const parser = exifParser.create(buffer);
         const result = parser.parse();
-        //console.log("accessing coordinates2");
 
         if (result.tags.GPSLatitude && result.tags.GPSLongitude) {
-            //console.log("accessing coordinates");
             latitude = result.tags.GPSLatitude;
             longitude = result.tags.GPSLongitude;
 
@@ -62,6 +61,7 @@ exports.add_memory = (req, res) => {
         }
     );
 };
+
 
 
 // get all memories from a user

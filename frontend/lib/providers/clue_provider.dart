@@ -1,3 +1,4 @@
+import 'dart:async'; // For Timer
 import 'package:flutter/material.dart';
 import 'package:frontend/models/clue.dart';
 import 'package:frontend/services/clue_service.dart';
@@ -8,14 +9,13 @@ class ClueProvider extends ChangeNotifier {
   Logger logger = Logger(level: Level.debug);
   List<Clue> _unlockedClues = [];
   List<Clue> _lockedClues = [];
+  List<String> _notifications = []; // List to store notification messages
 
-  List<Clue> getUnlockedClues() {
-    return _unlockedClues;
-  }
+  List<Clue> getUnlockedClues() => _unlockedClues;
 
-  List<Clue> getLockedClues() {
-    return _lockedClues;
-  }
+  List<Clue> getLockedClues() => _lockedClues;
+
+  List<String> getNotifications() => _notifications; // Retrieve notifications
 
   void setUnlockedClues(List<Clue> clues) {
     _unlockedClues = clues;
@@ -28,17 +28,29 @@ class ClueProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addNotification(String message) {
+    _notifications.add(message);
+    notifyListeners();
+  }
+
   void clear() {
     setUnlockedClues([]);
     setLockedClues([]);
+    _notifications.clear();
+    notifyListeners(); // Notify listeners to update the UI
+  }
+
+  // Added method to clear notifications only
+  void clearNotifications() {
+    _notifications.clear();
+    logger.d('Notifications cleared');
+    notifyListeners(); // Notify listeners to update the UI
   }
 
   Future<void> initialize(int userId) async {
     ClueService clueService = ClueService();
-    // Fetching unlocked clues
     List<Clue> unlockedClues = await clueService.getUnlocked(userId);
     setUnlockedClues(unlockedClues);
-    // Fetching locked clues
     List<Clue> lockedClues = await clueService.getLocked(userId);
     setLockedClues(lockedClues);
   }
@@ -48,6 +60,7 @@ class ClueProvider extends ChangeNotifier {
     var result = await clueService.addUnlocked(userId, clueId);
     if (result['success']) {
       await initialize(userId);
+      logger.d('Success unlocking clue');
     } else {
       logger.e('Error unlocking clue');
     }
@@ -56,29 +69,35 @@ class ClueProvider extends ChangeNotifier {
   Future<void> checkForUnlocks(int userId, Position position) async {
     for (var clue in _lockedClues) {
       var cluePosition = Position(
-      longitude: clue.longitude!,
-       latitude: clue.latitude!,
+        longitude: clue.longitude!,
+        latitude: clue.latitude!,
         timestamp: position.timestamp,
-         accuracy: position.accuracy,
-          altitude: position.altitude,
-           altitudeAccuracy: position.altitudeAccuracy,
-            heading: position.heading,
-             headingAccuracy: position.headingAccuracy,
-              speed: position.speed,
-               speedAccuracy: position.speedAccuracy);
-      if(_closeToClue(cluePosition, position)) {
+        accuracy: position.accuracy,
+        altitude: position.altitude,
+        altitudeAccuracy: position.altitudeAccuracy,
+        heading: position.heading,
+        headingAccuracy: position.headingAccuracy,
+        speed: position.speed,
+        speedAccuracy: position.speedAccuracy,
+      );
+
+      if (_closeToClue(cluePosition, position)) {
         await addUnlockedClue(userId, clue.id);
+        addNotification("Clue '${clue.title}' unlocked!"); // Add notification here
       }
     }
   }
 
   bool _closeToClue(Position cluePosition, Position userPosition) {
-    const double thresholdDistance = 10;
+    const double thresholdDistance = 100;
+    logger.d("checking distance");
     double distance = Geolocator.distanceBetween(
-      cluePosition.latitude, cluePosition.longitude,
-      userPosition.latitude, userPosition.longitude);
+      cluePosition.latitude,
+      cluePosition.longitude,
+      userPosition.latitude,
+      userPosition.longitude,
+    );
 
-      return distance < thresholdDistance;
+    return distance < thresholdDistance;
   }
-
 }

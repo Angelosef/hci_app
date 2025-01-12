@@ -17,22 +17,7 @@ db.run(`
   INSERT INTO Memories (user_id, title, content, image_url, latitude, longitude) 
   VALUES 
     (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
-    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
-    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
-    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
-    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
-    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
-    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
-    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
-    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
-    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
-    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
-    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
-    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
-    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
-    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
-    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
-    (1, 'Beach Day', 'Relaxing day at the sunny beach.', '/uploads/im5.jpg', 34.0522, -118.2437),
+    (2, 'Beach Day', 'Relaxing day at the sunny beach.', '/uploads/im5.jpg', 34.0522, -118.2437),
     (3, 'City Lights', 'Exploring the city at night.', '/uploads/im6.jpg', 40.7128, -74.0060)
 `, (err) => {
   if (err) console.error('Error seeding Memories:', err.message);

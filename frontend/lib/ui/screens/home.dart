@@ -9,8 +9,6 @@ import 'package:frontend/ui/screens/memories.dart'; // Assuming you have this sc
 import 'package:frontend/ui/screens/add_mem.dart'; // Add this import for Add Memory screen
 import 'package:frontend/ui/screens/map.dart';
 import 'package:frontend/ui/screens/camera_ar.dart';
-
-
 import 'package:frontend/ui/screens/clue_display.dart';
 import 'dart:async';
 import 'package:geolocator/geolocator.dart';
@@ -27,17 +25,16 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _currentIndex = 0; // Current index for the page
   final List<Widget> _pages = const [
-    //Center(child: Text("Welcome to Home Page!")), // Home Screen
-    Center(child: MapScreen()),
+    Center(child: MapScreen()),       // Home Screen
     Center(child: MemoryList()),       // Memories Screen
     Center(child: AddMemoryScreen()),
     Center(child: CluesList()),    // Profile Screen
     Center(child: CameraARScreen()),
     // Add more screens as needed
   ];
+  
   Timer? _timer;
   final Logger logger = Logger(level: Level.debug);
-  
 
   @override
   void initState() {
@@ -54,7 +51,6 @@ class _HomePageState extends State<HomePage> {
       final clueProvider = Provider.of<ClueProvider>(context, listen: false);
       final userProvider = Provider.of<UserProvider>(context, listen: false);
       clueProvider.checkForUnlocks(userProvider.get().id, position);
-      
     });
   }
 

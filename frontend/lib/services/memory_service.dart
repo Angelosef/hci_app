@@ -44,20 +44,24 @@ class MemoryService {
   }
 
   Future<Map<String, dynamic>> addMemory({
-    required int userId,
-    required String title,
-    required String content,
-    required String imagePath
+  required int userId,
+  required String title,
+  required String content,
+  required String imagePath,
+  required double latitude, // Add latitude parameter
+  required double longitude, // Add longitude parameter
   }) async {
     final formData = FormData.fromMap({
       'user_id': userId,
       'title': title,
       'content': content,
+      'latitude': latitude, // Include latitude in the request
+      'longitude': longitude, // Include longitude in the request
       'image': await MultipartFile.fromFile(
         imagePath,
         filename: imagePath.split('/').last,
         contentType: DioMediaType('image', 'jpeg'),
-      )
+      ),
     });
 
     final response = await _api.post('/memories/add_memory', formData);
@@ -66,12 +70,12 @@ class MemoryService {
       logger.d('Memory added successfully');
       logger.i(response?.data);
       return {'success': true, 'data': response?.data};
-    }
-    else {
+    } else {
       logger.e('Failed to add memory - reason: unknown');
       return {'success': false};
     }
   }
+
 
 
 

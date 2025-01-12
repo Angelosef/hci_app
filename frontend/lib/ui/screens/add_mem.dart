@@ -6,6 +6,7 @@ import 'package:frontend/services/memory_service.dart'; // Import the memory ser
 import 'package:frontend/providers/user_provider.dart'; // Import the UserProvider
 import 'package:provider/provider.dart'; // Import provider package
 import 'package:logger/logger.dart';
+import 'package:geolocator/geolocator.dart'; // Import Geolocator package for location
 
 class AddMemoryScreen extends StatefulWidget {
   const AddMemoryScreen({super.key});
@@ -19,26 +20,35 @@ class _AddMemoryScreenState extends State<AddMemoryScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final Logger logger = Logger(level: Level.debug);
-  
+  double? _latitude; // To store latitude
+  double? _longitude; // To store longitude
+
+  @override
+  void initState() {
+    super.initState();
+    _getCurrentLocation(); // Fetch current location when screen is initialized
+  }
+
+  // Method to get the user's current location
+  Future<void> _getCurrentLocation() async {
+    try {
+      Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+      setState(() {
+        _latitude = position.latitude;
+        _longitude = position.longitude;
+      });
+    } catch (e) {
+      logger.e("Error getting location: $e");
+    }
+  }
 
   Future<void> _pickImage() async {
     final ImagePicker picker = ImagePicker();
     final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
-    //final bytes = await pickedFile.readAsBytes();
-    //final tags = await readExifFromBytes(bytes);
-
-    //if (tags != null && tags.isNotEmpty) {
-      //final latitude = tags['GPSLatitude']?.printable;
-      //final longitude = tags['GPSLongitude']?.printable;
-
-      //if (latitude != null && longitude != null) {
-        //logger.d('latitude = $latitude');
-        //logger.d('longitude = $longitude');
-      //}
-    //}
-
       setState(() {
         _image = pickedFile;
       });
@@ -56,6 +66,14 @@ class _AddMemoryScreenState extends State<AddMemoryScreen> {
       return;
     }
 
+    // Ensure location is available
+    if (_latitude == null || _longitude == null) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Location is not available. Please try again.'),
+      ));
+      return;
+    }
+
     // Get the current user from UserProvider
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     final memoryProvider = Provider.of<MemoryProvider>(context, listen: false);
@@ -68,6 +86,8 @@ class _AddMemoryScreenState extends State<AddMemoryScreen> {
       title: title,
       content: description,
       imagePath: imagePath,
+      latitude: _latitude!,  // Include latitude
+      longitude: _longitude!, // Include longitude
     );
 
     if (result['success']) {
