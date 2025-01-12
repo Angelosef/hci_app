@@ -24,8 +24,8 @@ class Clue {
       description: json['description'] ?? '',
       location: json['location'] ?? '',
       imageUrl: json['image_url'] ?? '',
-      latitude: json['latitude'] != null ? (json['latitude'] as num).toDouble() : null,
-      longitude: json['longitude'] != null ? (json['longitude'] as num).toDouble() : null,
+      latitude: (json['latitude'] as num).toDouble(),
+      longitude: (json['longitude'] as num).toDouble(),
     );
   }
 

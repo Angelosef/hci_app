@@ -16,9 +16,24 @@ db.run(`
 db.run(`
   INSERT INTO Memories (user_id, title, content, image_url, latitude, longitude) 
   VALUES 
-    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/no1.jpg', 37.7749, -122.4194),
-    (1, 'Beach Day', 'Relaxing day at the sunny beach.', '/uploads/no2.jpg', 34.0522, -118.2437),
-    (3, 'City Lights', 'Exploring the city at night.', '/uploads/no3.jpg', 40.7128, -74.0060)
+    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
+    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
+    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
+    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
+    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
+    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
+    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
+    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
+    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
+    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
+    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
+    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
+    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
+    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
+    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
+    (1, 'Mountain Adventure', 'A thrilling hike to the peak.', '/uploads/im4.jpg', 37.7749, -122.4194),
+    (1, 'Beach Day', 'Relaxing day at the sunny beach.', '/uploads/im5.jpg', 34.0522, -118.2437),
+    (3, 'City Lights', 'Exploring the city at night.', '/uploads/im6.jpg', 40.7128, -74.0060)
 `, (err) => {
   if (err) console.error('Error seeding Memories:', err.message);
   else console.log('Memories table seeded successfully');
@@ -28,9 +43,9 @@ db.run(`
 db.run(`
   INSERT INTO Clues (title, description, location, latitude, longitude, image_url) 
   VALUES 
-    ('clue1', 'Find the hidden key', 'Central Park', 1.23, 34.34, '/uploads/no1.jpg'),
-    ('clue2', 'Look behind the old tree', 'City Square', 34.45, 45.45, '/uploads/no2.jpg'),
-    ('clue3', 'Search near the fountain', 'Town Plaza', 34.4, 42.4, '/uploads/no3.jpg')
+    ('clue1', 'Find the hidden key', 'Central Park', 1.23, 34.34, '/uploads/im1.jpg'),
+    ('clue2', 'Look behind the old tree', 'City Square', 34.45, 45.45, '/uploads/im2.jpg'),
+    ('clue3', 'Search near the fountain', 'Town Plaza', 34.4, 42.4, '/uploads/im3.jpg')
 `, (err) => {
   if (err) console.error('Error seeding Clues:', err.message);
   else console.log('Clues table seeded successfully');

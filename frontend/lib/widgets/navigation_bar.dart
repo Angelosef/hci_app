@@ -42,7 +42,7 @@ class NavBar extends StatelessWidget {
             ),
             IconButton(
               icon: Icon(
-                Icons.flag,
+                Icons.search,
                 color: currentIndex == 3 ? Colors.white : const Color(0xFF006878),
               ),
               onPressed: () => onTabSelected?.call(3),

@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/ui/screens/clue_display.dart';
+import 'package:frontend/ui/screens/clues.dart';
 import 'package:frontend/widgets/navigation_bar.dart'; // Import the new navigation bar widget
 import 'package:frontend/widgets/top_bar.dart'; // Import the TopBar widget
 import 'package:frontend/ui/screens/memories.dart'; // Assuming you have this screen
 import 'package:frontend/ui/screens/add_mem.dart'; // Add this import for Add Memory screen
 import 'package:frontend/ui/screens/map.dart';
+import 'package:frontend/ui/screens/camera_ar.dart';
+
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,8 +24,8 @@ class _HomePageState extends State<HomePage> {
     Center(child: MapScreen()),
     Center(child: MemoryList()),       // Memories Screen
     Center(child: AddMemoryScreen()),
-    Center(child: Text("Flags!")),    // Profile Screen
-    Center(child: Text("Camera!")),
+    Center(child: CluesList()),    // Profile Screen
+    Center(child: CameraARScreen()),
     // Add more screens as needed
   ];
 

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/ui/screens/camera_ar.dart';
+import 'package:frontend/ui/screens/clues.dart';
 import 'package:frontend/ui/screens/loading.dart';
 import 'package:frontend/ui/screens/login.dart';
 import 'package:frontend/ui/screens/add_mem.dart';
@@ -37,8 +39,9 @@ class MyApp extends StatelessWidget {
         '/home': (context) => HomePage(),
         '/register': (context) => RegisterScreen(),
         '/home/settings': (context) => SettingsScreen(),
-        '/home/clue_display': (context) => UnlockedCluesScreen(),
+        '/home/clues': (context) => CluesList(),
         '/home/add_mem': (context) => AddMemoryScreen(),
+        '/home/camera': (context) => CameraARScreen(),
       },
     );
   }

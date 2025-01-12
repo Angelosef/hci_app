@@ -23,6 +23,7 @@ class ClueProvider extends ChangeNotifier {
 
   void setLockedClues(List<Clue> clues) {
     _lockedClues = clues;
+    logger.d("Locked Clues: $_lockedClues");
     notifyListeners();
   }
 

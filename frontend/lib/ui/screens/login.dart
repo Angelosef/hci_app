@@ -126,20 +126,20 @@ class LoginScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
-        color: const Color(0xFF00293D),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.white),
-              onPressed: () {
-                Navigator.pop(context); // Go back action
-              },
-            ),
-          ],
-        ),
-      ),
+      // bottomNavigationBar: BottomAppBar(
+      //   color: const Color(0xFF00293D),
+      //   child: Row(
+      //     mainAxisAlignment: MainAxisAlignment.end,
+      //     children: [
+      //       IconButton(
+      //         icon: const Icon(Icons.arrow_back, color: Colors.white),
+      //         onPressed: () {
+      //           Navigator.pop(context); // Go back action
+      //         },
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }
